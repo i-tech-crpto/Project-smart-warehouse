@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::withoutMiddleware([VerifyCsrfToken::class])->group(function () {
+    Route::prefix('api')->group(function () {
+        Route::post('/login', 'Api\AuthController@store');
+    });
 });
